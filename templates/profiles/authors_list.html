@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if not authors %}
+<h2>There is none authors!</h2>
+<h3>Would you like to create a content being an Author?</h3>
+<button>Add Author</button>
+{% else %}
+<h1>Here is the list of Authors !!</h1>
+{% for author in authors %}
+
+<p>{{author.user}}</p>
+{% endfor %}
+{% endif %}
+{% endblock %}

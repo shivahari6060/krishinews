@@ -1,0 +1,21 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a{
+	text-decoration: none;
+}
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab&display=swap');
+.robfont{
+    font-family: 'Roboto Slab', serif;
+}
+h1, h2, h3, h4, p, span, strike{
+	font-family: 'Roboto Slab', serif;
+}

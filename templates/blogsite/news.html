@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/css/blog_card.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+<div class="text-right">
+	<form method="GET" action="{% url 'blogsite:news' %}">
+		<input type="text" name="q" placeholder="Search News...">
+	</form>
+</div>
+<div></div>
+<div class="news-wrapper">
+	<div class="category-list">
+		<div class="category-child text-center btrr btlr shadow">
+			<div class="dark-light pd btrr btlr"><h5 >Categories</h5></div>
+			
+			<div><a href="{% url 'blogsite:news' %}">All</a></div>
+			{% for category in categories %}
+			<hr>
+			<div class="pd">
+				<a href="{% url 'blogsite:news' %}?q={{category.title}}">{{category.title}}<span class="badge">[docs]</span></a>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+		
+		<div class="news-grid p-3">
+			<h1 class="text-center lbg pdn">Latest News</h1>
+			{% if posts %}
+			{% for post in posts %}	
+			<div class="blog-card">
+		        <div class="author">
+		            <div class="author-image">
+		                <img class="image auth-image" src="{% static 'news/img/person.jpg' %}">
+		            </div>
+		            <div class="author-name pdn f13 robfont clink">@{{post.author.author.first_name}} {{post.author.author.last_name}}</div>
+		            {% if post.pinned %}
+		            <div class="pinned pdn">&middot;{% include 'pinned_svg.html' %}<span class="c-mute f11 robfont">Editor's Choice</span></div>
+		            {% endif %}
+		            <div class="star pdn c-mute f11">{% include 'publishsvg.html' %} {{post.published_date|timesince}} ago</div>
+		             
+		        </div>
+		        <hr>
+		        <div class="title mt1">
+		            <div class="title-head">
+		                <strong><a href="{{ post.get_absolute_url }}" class="bt robfont">{{post.title}}</a></strong>
+		                <p class="p-black ptext robfont">{{post.body|truncatechars:250}}</p>
+		            </div>
+		            <div class="title-photo s-image">
+		            	
+		                <img class="s-image" height="150px" width="150px" src="{% static 'news/img/banana.jpg' %}">
+		            </div>
+		        </div>
+		        <div class="card-footer">
+		            <div class="card-category">
+		                <div class="tag f12 mr1">{{post.sub_sector.catgory}}</div>
+		                <div class="tag f12 mr1">{{post.sub_sector.subcatgory}}</div>
+		                <div class="tag f12 mr1">{{post.sub_sector}}</div>
+		                <div class="read-time white txt-b c-mute f12">6 min read</div>
+		            </div>
+		            <div class="bookmark-icon"><a href="#">{% include 'bookmark_svg.html' %}</a></div>
+		        </div>
+		        <hr>
+		    </div>
+		    {% endfor %}
+			{% else %}
+			<div class="text-center"><h5>No posts yet available on category {{q}}! Would like to add some? Apply for Author role. Thank you !</h5></div>
+			{% endif %}
+		</div>
+		<div class="br">
+			<div class="text-center"><h5>Recent Activity</h5><hr></div>
+			<div class="pd">
+				{% for comment in comments %}
+				<p class="shadow p-3">
+					<a href="" style="color:aqua;">@{{comment.user}}</a> commented on "{{comment.post}}" <br>
+					{{comment.body}}
+				</p>
+				{% endfor %}
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+{% endblock %}
